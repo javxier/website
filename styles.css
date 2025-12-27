@@ -425,7 +425,8 @@
     left: 30px;
 }
 
-.services__card button {
+.services__card button,
+.card__btn {
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -437,6 +438,13 @@
     left: 30px;
     font-size: 1rem;
     cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+a.services__card {
+    text-decoration: none;
+    color: #fff;
 }
 
 .services__card:hover {
