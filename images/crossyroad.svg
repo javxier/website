@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" preserveAspectRatio="xMidYMid slice">
+  <rect width="100%" height="100%" fill="#14232a"/>
+  <g fill="#ffd166" font-family="sans-serif" font-weight="700" font-size="48">
+    <text x="50%" y="36%" text-anchor="middle">Crossy Road</text>
+    <text x="50%" y="50%" text-anchor="middle" font-size="20">Endless Runner • Unity-like</text>
+  </g>
+  <g transform="translate(70,840)" fill="#ffd166">
+    <rect x="0" y="0" width="660" height="18" rx="6"/>
+  </g>
+</svg>

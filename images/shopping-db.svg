@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" preserveAspectRatio="xMidYMid slice">
+  <rect width="100%" height="100%" fill="#0a1420"/>
+  <g fill="#ffd6e0" font-family="sans-serif" font-weight="700">
+    <text x="50%" y="36%" text-anchor="middle" font-size="40">Shopping Database</text>
+    <text x="50%" y="50%" text-anchor="middle" font-size="18">E-commerce • Data</text>
+  </g>
+  <g transform="translate(160,720)" fill="#ffd6e0" opacity="0.9">
+    <rect x="0" y="0" width="120" height="36" rx="8"/>
+    <rect x="160" y="0" width="120" height="36" rx="8"/>
+    <rect x="320" y="0" width="120" height="36" rx="8"/>
+  </g>
+</svg>

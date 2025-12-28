@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Space Invaders — Project</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main style="max-width:900px;margin:3rem auto;padding:0 1rem;color:#fff;">
+    <h1>Space Invaders</h1>
+    <p>Creator: Gerardo J Orellana</p>
+
+    <section id="player-wrap" style="background:#021018;padding:1rem;border-radius:8px;margin:1.5rem 0;display:flex;justify-content:center;">
+      <canvas id="si-canvas" width="360" height="600" style="background:#001122;border-radius:6px;display:block;"></canvas>
+    </section>
+
+    <a href="https://github.com/javxier/space-invaders-game" target="_blank" class="main__btn" style="display:inline-block;margin-bottom:2rem;">View on GitHub</a>
+
+    <p style="color:#bbb">Controls: Left/Right arrows to move, Space to shoot.</p>
+  </main>
+
+  <script>
+  (function(){
+    const canvas = document.getElementById('si-canvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    let keys = {};
+    window.addEventListener('keydown', e=>keys[e.code]=true);
+    window.addEventListener('keyup', e=>keys[e.code]=false);
+
+    const player = {x:W/2-18,y:H-60,w:36,h:16};
+    const bullets = [];
+    const aliens = [];
+    const rows = 3, cols = 6;
+    for(let r=0;r<rows;r++) for(let c=0;c<cols;c++) aliens.push({x:40+c*50,y:40+r*40,w:34,h:22,alive:true});
+    let dir=1, offset=0;
+
+    function update(){
+      if(keys['ArrowLeft']) player.x -= 4;
+      if(keys['ArrowRight']) player.x += 4;
+      player.x = Math.max(0, Math.min(W-player.w, player.x));
+      if(keys['Space'] && bullets.length<3){ bullets.push({x:player.x+player.w/2-3,y:player.y-6,vy:-8}); keys['Space']=false; }
+      bullets.forEach(b=>b.y+=b.vy);
+      for(let i=aliens.length-1;i>=0;i--){ let a=aliens[i]; if(!a.alive) continue; a.x += dir*0.3; }
+      offset += 0.3; if(offset>30){ dir*=-1; offset=0; aliens.forEach(a=>a.y+=8); }
+      bullets.forEach(b=>{ aliens.forEach(a=>{ if(a.alive && b.x>a.x && b.x<a.x+a.w && b.y>a.y && b.y<a.y+a.h){ a.alive=false; b.y=-999; } }); });
+      // cleanup
+      while(bullets.length && bullets[0].y<0) bullets.shift();
+    }
+
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      ctx.fillStyle='#fff'; ctx.font='16px sans-serif'; ctx.fillText('Aliens: '+aliens.filter(a=>a.alive).length,12,22);
+      ctx.fillStyle='#66f2a4'; aliens.forEach(a=>{ if(a.alive){ ctx.fillRect(a.x,a.y,a.w,a.h); }});
+      ctx.fillStyle='#f0f0f0'; ctx.fillRect(player.x,player.y,player.w,player.h);
+      ctx.fillStyle='#ffd166'; bullets.forEach(b=>{ ctx.fillRect(b.x,b.y,6,12); });
+    }
+
+    function loop(){ update(); draw(); requestAnimationFrame(loop); }
+    loop();
+  })();
+  </script>
+</body>
+</html>

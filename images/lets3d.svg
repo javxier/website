@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" preserveAspectRatio="xMidYMid slice">
+  <rect width="100%" height="100%" fill="#0b1320"/>
+  <g fill="#c2f0ff" font-family="sans-serif" font-weight="700">
+    <text x="50%" y="36%" text-anchor="middle" font-size="48">Lets3D</text>
+    <text x="50%" y="50%" text-anchor="middle" font-size="20">3D Modeling • Tools</text>
+  </g>
+  <g transform="translate(240,520)" fill="#c2f0ff" opacity="0.14">
+    <rect x="0" y="0" width="320" height="200" rx="10"/>
+    <rect x="40" y="40" width="240" height="120" rx="8"/>
+  </g>
+</svg>

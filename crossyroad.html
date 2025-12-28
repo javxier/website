@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Crossy Road — Project</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main style="max-width:900px;margin:3rem auto;padding:0 1rem;color:#fff;">
+    <h1>Crossy Road</h1>
+    <p>Creator: Gerardo J Orellana</p>
+
+    <section id="player-wrap" style="background:#07121a;padding:1rem;border-radius:8px;margin:1.5rem 0;display:flex;justify-content:center;">
+      <canvas id="cr-canvas" width="360" height="600" style="background:#0b1a22;border-radius:6px;display:block;"></canvas>
+    </section>
+
+    <a href="https://github.com/javxier/crossyroad-game" target="_blank" class="main__btn" style="display:inline-block;margin-bottom:2rem;">View on GitHub</a>
+
+    <p style="color:#bbb">Controls: Arrow keys to move. Cross lanes avoiding cars.</p>
+  </main>
+
+  <script>
+  (function(){
+    const canvas = document.getElementById('cr-canvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    let keys = {};
+    window.addEventListener('keydown', e=>keys[e.code]=true);
+    window.addEventListener('keyup', e=>keys[e.code]=false);
+
+    const player = {x:W/2-12,y:H-60,w:24,h:24};
+    const lanes = [ {y:420,speed:2},{y:360,speed:-3},{y:300,speed:2},{y:240,speed:-2} ];
+    const cars = [];
+    lanes.forEach((l,i)=>{ for(let j=0;j<3;j++) cars.push({x:j*140,y:l.y,w:60,h:24,vx:l.speed}); });
+
+    function update(){
+      if(keys['ArrowLeft']) player.x -= 4; if(keys['ArrowRight']) player.x += 4;
+      if(keys['ArrowUp']) player.y -= 6; if(keys['ArrowDown']) player.y += 6;
+      player.x = Math.max(0, Math.min(W-player.w, player.x)); player.y = Math.max(0, Math.min(H-player.h, player.y));
+      cars.forEach(c=>{ c.x += c.vx; if(c.x > W+100) c.x = -200; if(c.x < -200) c.x = W+100; });
+      // collisions
+      for(const c of cars){ if(player.x < c.x + c.w && player.x + player.w > c.x && player.y < c.y + c.h && player.y + player.h > c.y){ // reset
+        player.x = W/2-12; player.y = H-60; }
+      }
+    }
+
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      ctx.fillStyle='#fff'; ctx.font='16px sans-serif'; ctx.fillText('Move up to win',12,22);
+      // draw lanes
+      for(const l of lanes){ ctx.fillStyle='#223'; ctx.fillRect(0,l.y,W,40); }
+      // cars
+      ctx.fillStyle='#ff6b6b'; cars.forEach(c=>ctx.fillRect(c.x,c.y,c.w,c.h));
+      // player
+      ctx.fillStyle='#ffd166'; ctx.fillRect(player.x,player.y,player.w,player.h);
+    }
+
+    function loop(){ update(); draw(); requestAnimationFrame(loop); }
+    loop();
+  })();
+  </script>
+</body>
+</html>

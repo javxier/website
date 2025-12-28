@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" preserveAspectRatio="xMidYMid slice">
+  <rect width="100%" height="100%" fill="#001122"/>
+  <g fill="#5df2a4" font-family="monospace" font-weight="700" font-size="48">
+    <text x="50%" y="38%" text-anchor="middle">Space Invaders</text>
+    <text x="50%" y="52%" text-anchor="middle" font-size="20">Arcade • Retro</text>
+  </g>
+  <g transform="translate(260,760)" fill="#5df2a4">
+    <rect width="26" height="26" rx="4"/>
+    <rect x="40" width="26" height="26" rx="4"/>
+    <rect x="80" width="26" height="26" rx="4"/>
+    <rect x="120" width="26" height="26" rx="4"/>
+  </g>
+</svg>

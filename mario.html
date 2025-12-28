@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Mario Game — Project</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main style="max-width:900px;margin:3rem auto;padding:0 1rem;color:#fff;">
+    <h1>Mario Game</h1>
+    <p>Creator: Gerardo J Orellana</p>
+
+    <section id="player-wrap" style="background:#0d0d0d;padding:1rem;border-radius:8px;margin:1.5rem 0;display:flex;justify-content:center;">
+      <canvas id="mario-canvas" width="360" height="600" style="background:#132022;border-radius:6px;display:block;">Your browser does not support canvas.</canvas>
+    </section>
+
+    <a href="https://github.com/javxier/mario-game" target="_blank" class="main__btn" style="display:inline-block;margin-bottom:2rem;">View on GitHub</a>
+
+    <p style="color:#bbb">Controls: Left/Right arrows to move, Up arrow or Space to jump. Collect coins to score.</p>
+  </main>
+
+  <script>
+  (function(){
+    const canvas = document.getElementById('mario-canvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    let keys = {};
+    window.addEventListener('keydown', e=>keys[e.code]=true);
+    window.addEventListener('keyup', e=>keys[e.code]=false);
+
+    const player = {x:40,y:500,w:36,h:48,vy:0, onGround:false};
+    const gravity = 0.9;
+    let coins = [ {x:220,y:460,r:8,got:false}, {x:120,y:380,r:8,got:false}, {x:260,y:300,r:8,got:false} ];
+    let score = 0;
+
+    function update(){
+      if(keys['ArrowLeft']) player.x -= 4;
+      if(keys['ArrowRight']) player.x += 4;
+      if((keys['ArrowUp'] || keys['Space']) && player.onGround){ player.vy = -14; player.onGround=false; }
+      player.vy += gravity;
+      player.y += player.vy;
+      if(player.y + player.h > 560){ player.y = 560 - player.h; player.vy = 0; player.onGround = true; }
+      player.x = Math.max(0, Math.min(W-player.w, player.x));
+
+      coins.forEach(c=>{ if(!c.got){ const dx = (player.x+player.w/2)-c.x; const dy=(player.y+player.h/2)-c.y; if(Math.hypot(dx,dy) < 26){ c.got=true; score+=10; } }});
+    }
+
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      ctx.fillStyle='#2b2b2b'; ctx.fillRect(0,560,W,40);
+      ctx.fillStyle='#ff6b6b'; ctx.fillRect(player.x,player.y,player.w,player.h);
+      coins.forEach(c=>{ if(!c.got){ ctx.beginPath(); ctx.fillStyle='#ffd166'; ctx.arc(c.x,c.y,c.r,0,Math.PI*2); ctx.fill(); }});
+      ctx.fillStyle='#fff'; ctx.font='18px sans-serif'; ctx.fillText('Score: '+score,12,22);
+    }
+
+    function loop(){ update(); draw(); requestAnimationFrame(loop); }
+    loop();
+  })();
+  </script>
+</body>
+</html>
